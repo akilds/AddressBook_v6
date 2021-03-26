@@ -62,6 +62,55 @@ public class AddressBookMain
 	   {
 		   contact[i].show();
       }
-	}
+      System.out.println("Enter a name : ");
+	   sc.nextLine();
+      String name = sc.nextLine();
+	   for(int i=0;i<n;i++)
+	   {
+		   if(contact[i].firstname.equals(name))
+		   {
+	   		System.out.println("What do you want to change : ");
+            System.out.println("1. Firstname");
+            System.out.println("2. Lastname");
+            System.out.println("3. Address");
+            System.out.println("4. City");
+            System.out.println("5. State");
+            System.out.println("6. Zip");
+            System.out.println("7. PhoneNo");
+            System.out.println("8. Email");
+            System.out.println("Enter your choice : ");
+		   	int option = sc.nextInt();
+            sc.nextLine();
+			   switch(option)
+			   {
+			     case 1 : System.out.println("Enter new firstname : ");
+                       contact[i].firstname = sc.nextLine();
+			              break;
+		     	  case 2 : System.out.println("Enter new lastname : ");
+                       contact[i].lastname = sc.nextLine();
+			              break;
+			     case 3 : System.out.println("Enter new address : ");
+                       contact[i].phoneNo = sc.nextLine();
+                       break;
+				  case 4 : System.out.println("Enter new city : ");
+                       contact[i].address = sc.nextLine();
+                       break;
+			     case 5 : System.out.println("Enter new state : ");
+                       contact[i].city = sc.nextLine();
+			              break;
+			     case 6 : System.out.println("Enter new zip : ");
+                       contact[i].state = sc.nextLine();
+                       break;
+		     	  case 7 : System.out.println("Enter new phoneno : ");
+                       contact[i].zip = sc.nextLine();
+			              break;
+			     case 8 : System.out.println("Enter new email : ");
+                       contact[i].email = sc.nextLine();
+                       break;
+			     default: System.out.println("Invalid");
+			   }
+			   contact[i].show();
+		   }
+	   }
+   }
 }
-
