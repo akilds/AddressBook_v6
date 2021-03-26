@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class AddressBookMain
+class ContactPerson
 {
      public String firstname;
      public String lastname;
@@ -10,7 +10,7 @@ public class AddressBookMain
      public String state;
      public String zip;
      public String email;
-     public AddressBookMain()
+     public ContactPerson()
      {
          Scanner scan = new Scanner(System.in);
          System.out.println("Enter firstname : ");
@@ -32,7 +32,7 @@ public class AddressBookMain
       }
      public void show()
      {
-	      System.out.println("Contact Details : ");
+	      System.out.println("Contact Details");
 	      System.out.println(this.firstname);
 	      System.out.println(this.lastname);
 	      System.out.println(this.phoneNo);
@@ -45,4 +45,23 @@ public class AddressBookMain
 }
 
 
+
+public class AddressBookMain
+{
+	public static void main(String[] args)
+   {
+	   ContactPerson[] contact = new ContactPerson[10];
+	   Scanner sc = new Scanner(System.in);
+	   System.out.println("Enter number of contacts : ");
+	   int n = sc.nextInt();
+	   for(int i=0;i<n;i++)
+	   {
+		   contact[i] = new ContactPerson();
+	   }
+	   for(int i=0;i<n;i++)
+	   {
+		   contact[i].show();
+      }
+	}
+}
 
