@@ -10,7 +10,8 @@ class ContactPerson
      public String state;
      public String zip;
      public String email;
-     public ContactPerson(String firstname, String lastname, String phoneNo,String address, String city, String state, String zip, String email)
+     public String AddressBookName;
+     public ContactPerson(String firstname, String lastname, String phoneNo,String address, String city, String state, String zip, String email, String AddressBookName)
      {
          this.firstname = firstname;
          this.lastname = lastname;
@@ -20,6 +21,7 @@ class ContactPerson
          this.state = state;
          this.zip = zip;
          this.email = email;
+         this.AddressBookName = AddressBookName;
       }
      void changefname(String fname)
      {
@@ -55,7 +57,7 @@ class ContactPerson
      }
      public void show()
      {
-	       System.out.println("Contact Details");
+	       System.out.println("Contact Details of Address Book : " + this.AddressBookName);
 	       System.out.println(this.firstname);
 	       System.out.println(this.lastname);
 	       System.out.println(this.phoneNo);
@@ -69,8 +71,9 @@ class ContactPerson
 
 public class AddressBookMain
 {
-	public static void main(String[] args)
+	public static void addressBook(String AddressBookname)
    {
+      String addressBookname = AddressBookname;
 	   ArrayList<ContactPerson> contact = new ArrayList<ContactPerson>();
       String fname;
       String lname;
@@ -110,7 +113,7 @@ public class AddressBookMain
          zipp = scan.nextLine();
          System.out.println("Enter email : ");
          mail = scan.nextLine();
-         contact.add(new ContactPerson(fname,lname,phoneno,addrs,cityy,statee,zipp,mail));
+         contact.add(new ContactPerson(fname,lname,phoneno,addrs,cityy,statee,zipp,mail,addressBookname));
          contact.get(i).show();
          i++;
          count++;
@@ -195,4 +198,18 @@ public class AddressBookMain
          c = sc.next().charAt(0);
      }while(c=='Y'||c=='y');
    }
+  public static void main(String[] args)
+  {
+    Scanner sc = new Scanner(System.in);
+    char c = 'y';
+    do
+    {
+     sc.nextLine();
+     System.out.println("Enter Address Book Name : ");
+     String name = sc.nextLine();
+     addressBook(name);
+     System.out.println("Do you want a new Address Book (Y/N): ");
+     c = sc.next().charAt(0);
+    }while(c=='y'||c=='Y');
+  }
 }
