@@ -1,5 +1,6 @@
 import java.util.*;
 
+//USE CASE 1 - Creation of Contacts
 class ContactPerson
 {
      public String firstname;
@@ -71,18 +72,20 @@ class ContactPerson
 
 public class AddressBookMain
 {
+   //Use CASE 2, 3, 4 - Adding, Editing and Deleting a Contact
+   //USE CASE 5 - Adding Multiple Contacts
+   static String fname;
+   static String lname;
+   static String phoneno;
+   static String addrs;
+   static String cityy;
+   static String statee;
+   static String zipp;
+   static String mail;
 	public static void addressBook(String AddressBookname)
    {
       String addressBookname = AddressBookname;
 	   ArrayList<ContactPerson> contact = new ArrayList<ContactPerson>();
-      String fname;
-      String lname;
-      String phoneno;
-      String addrs;
-      String cityy;
-      String statee;
-      String zipp;
-      String mail;
       char c = 'Y';
       int i=0;
       int count = 0;
@@ -99,6 +102,9 @@ public class AddressBookMain
          Scanner scan = new Scanner(System.in);
          System.out.println("Enter firstname : ");
          fname = scan.nextLine();
+        //USE CASE 7 - Duplicate Check
+        if(contact.stream().anyMatch(contactElement -> contactElement.firstname.equals(fname))==false)
+        {
          System.out.println("Enter lastname : ");
          lname = scan.nextLine();
          System.out.println("Enter phoneNo : ");
@@ -117,6 +123,11 @@ public class AddressBookMain
          contact.get(i).show();
          i++;
          count++;
+        }
+        else
+        {
+          System.out.println("Contact already Exist");
+        }
        }
        else if(choice==2)
        {
@@ -198,15 +209,20 @@ public class AddressBookMain
          c = sc.next().charAt(0);
      }while(c=='Y'||c=='y');
    }
+
+  //USE CASE 6 - Adding Multiple AddressBook
   public static void main(String[] args)
   {
     Scanner sc = new Scanner(System.in);
+    List<String> addressBookNames = new ArrayList<String>();
+    int i=0;
     char c = 'y';
     do
     {
      sc.nextLine();
      System.out.println("Enter Address Book Name : ");
      String name = sc.nextLine();
+     addressBookNames.add(name);
      addressBook(name);
      System.out.println("Do you want a new Address Book (Y/N): ");
      c = sc.next().charAt(0);
