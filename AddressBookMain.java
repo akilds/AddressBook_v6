@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.*;
 
 //USE CASE 1 - Creation of Contacts
 class ContactPerson
@@ -68,6 +69,10 @@ class ContactPerson
 	       System.out.println(this.zip);
 	       System.out.println(this.email);
      }
+     public String getfname()
+     {
+       return this.firstname;
+     }
 }
 
 public class AddressBookMain
@@ -82,13 +87,14 @@ public class AddressBookMain
    static String statee;
    static String zipp;
    static String mail;
+   static int count =0;
+   static Map<String, ArrayList<ContactPerson>> contact1 = new HashMap<String, ArrayList<ContactPerson>>();
 	public static void addressBook(String AddressBookname)
    {
       String addressBookname = AddressBookname;
-	   ArrayList<ContactPerson> contact = new ArrayList<ContactPerson>();
+      ArrayList<ContactPerson> contact = new ArrayList<ContactPerson>();
       char c = 'Y';
       int i=0;
-      int count = 0;
 	   Scanner sc = new Scanner(System.in);
       do
       {
@@ -123,6 +129,7 @@ public class AddressBookMain
          contact.get(i).show();
          i++;
          count++;
+         contact1.put(addressBookname,contact);
         }
         else
         {
@@ -134,7 +141,7 @@ public class AddressBookMain
         System.out.println("Enter a name to be edited : ");
 	     sc.nextLine();
         String name = sc.nextLine();
-        for(i=0;i<count;i++)
+        for(i=0;i<=count+1;i++)
         {
 		     if(contact.get(i).firstname.equals(name))
 		     {
@@ -187,6 +194,8 @@ public class AddressBookMain
 			       default: System.out.println("Invalid");
 			     }
               contact.get(i).show();
+              contact1.replace(addressBookname,contact);
+              break;
 		     }
           }
         }
@@ -195,12 +204,13 @@ public class AddressBookMain
           System.out.println("Enter the name to be deleted : ");
           sc.nextLine();
           String del_name = sc.nextLine();
-          for(i=0;i<count;i++)
+          for(i=0;i<=count;i++)
           {
             if(contact.get(i).firstname.equals(del_name))
             {
               contact.remove(i);
               count--;
+              contact1.remove(addressBookname);
             }
            contact.get(0).show();
           }
@@ -208,24 +218,37 @@ public class AddressBookMain
          System.out.println("Do you want to continue (Y/N) : ");
          c = sc.next().charAt(0);
      }while(c=='Y'||c=='y');
-   }
+  }
 
   //USE CASE 6 - Adding Multiple AddressBook
+  static String sity;
+  static int in = 0;
+  static ArrayList<String> list = new ArrayList<String>();
+  static int count2;
   public static void main(String[] args)
   {
     Scanner sc = new Scanner(System.in);
-    List<String> addressBookNames = new ArrayList<String>();
-    int i=0;
     char c = 'y';
+    count2=0;
     do
     {
      sc.nextLine();
      System.out.println("Enter Address Book Name : ");
      String name = sc.nextLine();
-     addressBookNames.add(name);
      addressBook(name);
      System.out.println("Do you want a new Address Book (Y/N): ");
      c = sc.next().charAt(0);
     }while(c=='y'||c=='Y');
-  }
+
+    //USE CASE 8 - Search Person based on City
+    System.out.println("Enter city : ");
+    sc.nextLine();
+    sity = sc.nextLine();
+
+    contact1.forEach((k,v) -> {
+         if(v.stream().anyMatch(s -> s.city.equals(sity))==true){
+           list.add(v.get(0).getfname());
+          }
+        });
+       System.out.println(list);
 }
