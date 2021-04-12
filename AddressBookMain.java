@@ -71,7 +71,11 @@ class ContactPerson
      }
      public String getfname()
      {
-       return this.firstname;
+       return firstname;
+     }
+     public String getcity()
+     {
+       return city;
      }
 }
 
@@ -225,6 +229,9 @@ public class AddressBookMain
   static int in = 0;
   static ArrayList<String> list = new ArrayList<String>();
   static int count2;
+  static String ccity;
+  static Map<String, ArrayList<String>> dict = new HashMap<String, ArrayList<String>>();
+  static ArrayList<String> list1 = new ArrayList<String>();
   public static void main(String[] args)
   {
     Scanner sc = new Scanner(System.in);
@@ -250,5 +257,21 @@ public class AddressBookMain
            list.add(v.get(0).getfname());
           }
         });
-       System.out.println(list);
+    System.out.println(list);
+
+   //USE CASE 9 - View person in a city
+    contact1.entrySet().forEach(entry -> {
+       ccity = entry.getValue().get(0).getcity();
+       if(entry.getValue().get(0).getcity()==ccity)
+       {
+         list1.add(entry.getValue().get(0).getfname());
+       }
+       dict.put(ccity,list1);
+       });
+
+   dict.entrySet().stream().forEach(entry -> {
+      System.out.println(entry.getKey());
+      System.out.println(entry.getValue());
+   });
+ }
 }
