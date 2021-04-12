@@ -273,5 +273,13 @@ public class AddressBookMain
       System.out.println(entry.getKey());
       System.out.println(entry.getValue());
    });
+
+   //USE CASE 10 - Find the count
+     contact1.forEach((k,v) -> {
+         if(v.stream().anyMatch(s -> s.city.equals(sity))==true){
+             count2++;
+          }});
+       System.out.println(count2);
+  }
  }
 }
