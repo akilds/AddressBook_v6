@@ -229,6 +229,8 @@ public class AddressBookMain
   static int in = 0;
   static ArrayList<String> list = new ArrayList<String>();
   static ArrayList<String> list2 = new ArrayList<String>();
+  static ArrayList<String> list3 = new ArrayList<String>();
+  static ArrayList<String> list4 = new ArrayList<String>();
   static int count2;
   static String ccity;
   static Map<String, ArrayList<String>> dict = new HashMap<String, ArrayList<String>>();
@@ -257,7 +259,7 @@ public class AddressBookMain
          if(entry.getValue().stream().anyMatch(s -> s.city.equals(sity))==true){
            list.add(entry.getValue().get(in).getfname());
           }
-        });
+    });
     System.out.println(list);
 
    //USE CASE 9 - View person in a city
@@ -268,7 +270,7 @@ public class AddressBookMain
          list1.add(entry.getValue().get(0).getfname());
        }
        dict.put(ccity,list1);
-       });
+   });
 
    dict.entrySet().stream().forEach(entry -> {
       System.out.println(entry.getKey());
@@ -279,7 +281,7 @@ public class AddressBookMain
    contact1.forEach((k,v) -> {
       if(v.stream().anyMatch(s -> s.city.equals(sity))==true)
             count2++;
-       }});
+   });
    System.out.println(count2);
 
    //USE CASE 11 - Sort by person
@@ -292,6 +294,24 @@ public class AddressBookMain
    Collections.sort(list2);
    System.out.println(list2);
 
+   //USE CASE 12 - Sort by City
+   contact1.entrySet().stream().forEach(entry -> {
+      list3.add(entry.getValue().get(in).getcity());
+      in++;
+   });
+
+   Collections.sort(list3);
+
+   contact1.entrySet().stream().forEach(entry -> {
+      ccity = list3.get(in);
+       if(entry.getValue().get(0).getcity()==ccity)
+       {
+         list4.add(entry.getValue().get(0).getfname());
+       }
+       in++;
+   });
+
+   System.out.println(list4);
   }
  }
 
