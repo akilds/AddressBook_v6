@@ -71,11 +71,11 @@ class ContactPerson
      }
      public String getfname()
      {
-       return firstname;
+       return this.firstname;
      }
      public String getcity()
      {
-       return city;
+       return this.city;
      }
 }
 
@@ -228,6 +228,7 @@ public class AddressBookMain
   static String sity;
   static int in = 0;
   static ArrayList<String> list = new ArrayList<String>();
+  static ArrayList<String> list2 = new ArrayList<String>();
   static int count2;
   static String ccity;
   static Map<String, ArrayList<String>> dict = new HashMap<String, ArrayList<String>>();
@@ -252,15 +253,15 @@ public class AddressBookMain
     sc.nextLine();
     sity = sc.nextLine();
 
-    contact1.forEach((k,v) -> {
-         if(v.stream().anyMatch(s -> s.city.equals(sity))==true){
-           list.add(v.get(0).getfname());
+    contact1.entrySet().forEach(entry -> {
+         if(entry.getValue().stream().anyMatch(s -> s.city.equals(sity))==true){
+           list.add(entry.getValue().get(in).getfname());
           }
         });
     System.out.println(list);
 
    //USE CASE 9 - View person in a city
-    contact1.entrySet().forEach(entry -> {
+    contact1.entrySet().stream().forEach(entry -> {
        ccity = entry.getValue().get(0).getcity();
        if(entry.getValue().get(0).getcity()==ccity)
        {
@@ -275,11 +276,22 @@ public class AddressBookMain
    });
 
    //USE CASE 10 - Find the count
-     contact1.forEach((k,v) -> {
-         if(v.stream().anyMatch(s -> s.city.equals(sity))==true){
-             count2++;
-          }});
-       System.out.println(count2);
+   contact1.forEach((k,v) -> {
+      if(v.stream().anyMatch(s -> s.city.equals(sity))==true)
+            count2++;
+       }});
+   System.out.println(count2);
+
+   //USE CASE 11 - Sort by person
+   contact1.entrySet().stream().forEach(entry -> {
+      list2.add(entry.getValue().get(in).getfname());
+      in++;
+   });
+
+   System.out.println(list2);
+   Collections.sort(list2);
+   System.out.println(list2);
+
   }
  }
-}
+
