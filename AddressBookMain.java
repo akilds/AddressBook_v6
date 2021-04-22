@@ -69,11 +69,37 @@ class ContactPerson
 	       System.out.println(this.zip);
 	       System.out.println(this.email);
      }
+     public void show1(String firstname)
+     {
+          System.out.println("Contact Details of Address Book : " + this.AddressBookName);
+          System.out.println(this.firstname);
+          System.out.println(this.lastname);
+          System.out.println(this.phoneNo);
+          System.out.println(this.address);
+          System.out.println(this.city);
+          System.out.println(this.state);
+          System.out.println(this.zip);
+          System.out.println(this.email);
+     }
+
+     public void show2(String city)
+     {
+          System.out.println("Contact Details of Address Book : " + this.AddressBookName);
+          System.out.println(this.firstname);
+          System.out.println(this.lastname);
+          System.out.println(this.phoneNo);
+          System.out.println(this.address);
+          System.out.println(this.city);
+          System.out.println(this.state);
+          System.out.println(this.zip);
+          System.out.println(this.email);
+     }
+
      public String getfname()
      {
        return this.firstname;
      }
-     public String getcity()
+     public String getCity()
      {
        return this.city;
      }
@@ -224,17 +250,15 @@ public class AddressBookMain
      }while(c=='Y'||c=='y');
   }
 
-  //USE CASE 6 - Adding Multiple AddressBook
-  static String sity;
-  static int in = 0;
-  static ArrayList<String> list = new ArrayList<String>();
-  static ArrayList<String> list2 = new ArrayList<String>();
-  static ArrayList<String> list3 = new ArrayList<String>();
-  static ArrayList<String> list4 = new ArrayList<String>();
-  static int count2;
-  static String ccity;
-  static Map<String, ArrayList<String>> dict = new HashMap<String, ArrayList<String>>();
-  static ArrayList<String> list1 = new ArrayList<String>();
+  public static String sity;
+  public static ArrayList<String> list = new ArrayList<String>();
+  public static ArrayList<String> list1 = new ArrayList<String>();
+  public static ArrayList<String> list2 = new ArrayList<String>();
+  public static ArrayList<ContactPerson> person1 = new ArrayList<>();
+  public static int count2;
+  public static int in=0;
+  public static int in1=0;
+  public static Map<String, ArrayList<String>> dict = new HashMap<String, ArrayList<String>>();
   public static void main(String[] args)
   {
     Scanner sc = new Scanner(System.in);
@@ -255,63 +279,103 @@ public class AddressBookMain
     sc.nextLine();
     sity = sc.nextLine();
 
-    contact1.entrySet().forEach(entry -> {
-         if(entry.getValue().stream().anyMatch(s -> s.city.equals(sity))==true){
-           list.add(entry.getValue().get(in).getfname());
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      if(per.city.equals(sity)){
+           list.add(per.firstname);
           }
-    });
+     }
+    }
     System.out.println(list);
 
-   //USE CASE 9 - View person in a city
-    contact1.entrySet().stream().forEach(entry -> {
-       ccity = entry.getValue().get(0).getcity();
-       if(entry.getValue().get(0).getcity()==ccity)
-       {
-         list1.add(entry.getValue().get(0).getfname());
-       }
-       dict.put(ccity,list1);
-   });
+    //USE CASE 9 - View person in a city
 
-   dict.entrySet().stream().forEach(entry -> {
-      System.out.println(entry.getKey());
-      System.out.println(entry.getValue());
-   });
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+      person1 = entry.getValue();
 
-   //USE CASE 10 - Find the count
-   contact1.forEach((k,v) -> {
-      if(v.stream().anyMatch(s -> s.city.equals(sity))==true)
-            count2++;
-   });
-   System.out.println(count2);
+      for(ContactPerson p : person1){
+            if(!dict.containsKey(p.getCity())){
+                dict.put(p.getCity(), new ArrayList<>());
+            }
+            dict.get(p.getCity()).add(p.firstname);
+      }
+    }
+    System.out.println(dict);
+
+    //USE CASE 10 - Find the count
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      if(per.city.equals(sity)){
+           count2++;
+          }
+     }
+    }
+    System.out.println(count2);
 
    //USE CASE 11 - Sort by person
-   contact1.entrySet().stream().forEach(entry -> {
-      list2.add(entry.getValue().get(in).getfname());
-      in++;
-   });
+
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      list1.add(per.firstname);
+     }
+    }
+
+   System.out.println(list1);
+   Collections.sort(list1);
+   System.out.println(list1);
+   int sizee = list1.size();
+   System.out.println(sizee);
+
+   while(in<sizee){
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      if(list1.get(in).equals(per.firstname)){
+        per.show1(per.firstname);
+        in++;
+      }
+      if(in==sizee){ break; }
+     }
+      if(in==sizee){ break; }
+    }
+   }
+
+    //USE CASE 12 - Sort by city
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      list2.add(per.city);
+     }
+    }
 
    System.out.println(list2);
    Collections.sort(list2);
    System.out.println(list2);
-
-   //USE CASE 12 - Sort by City
-   contact1.entrySet().stream().forEach(entry -> {
-      list3.add(entry.getValue().get(in).getcity());
-      in++;
-   });
-
-   Collections.sort(list3);
-
-   contact1.entrySet().stream().forEach(entry -> {
-      ccity = list3.get(in);
-       if(entry.getValue().get(0).getcity()==ccity)
-       {
-         list4.add(entry.getValue().get(0).getfname());
-       }
-       in++;
-   });
-
-   System.out.println(list4);
-  }
+   int sizee1 = list1.size();
+   System.out.println(sizee1);
+   while(in1<sizee1){
+    for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+    {
+     ArrayList<ContactPerson> person = entry.getValue();
+     for(ContactPerson per : person){
+      if(list2.get(in1).equals(per.city)){
+        per.show2(per.city);
+        in1++;
+      }
+      if(in1==sizee1){ break; }
+     }
+      if(in1==sizee1){ break; }
+    }
+   }
  }
+}
 
