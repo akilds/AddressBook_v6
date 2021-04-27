@@ -99,9 +99,29 @@ class ContactPerson
      {
        return this.firstname;
      }
+     public String getlname()
+     {
+       return this.lastname;
+     }
+     public String getphoneNo()
+     {
+       return this.phoneNo;
+     }
+     public String getaddress()
+     {
+       return this.address;
+     }
      public String getCity()
      {
        return this.city;
+     }
+     public String getzip()
+     {
+       return this.zip;
+     }
+     public String getmail()
+     {
+       return this.email;
      }
 }
 
@@ -250,6 +270,60 @@ public class AddressBookMain
      }while(c=='Y'||c=='y');
   }
 
+   //USE CASE 13 - Writing to a file and Reading from a file
+   public static void writeData()
+	{
+		StringBuffer empBuffer = new StringBuffer();
+		for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+	     {
+			String addressBookName = entry.getKey();
+	        ArrayList<ContactPerson> person = entry.getValue();
+	    	  person.forEach(contact -> {
+	  			String contactDetails = addressBookName.concat(" -> " + contact.getfname() + " " +  contact.getlname()
+	  			                        + " " + contact.getphoneNo() + " " + contact.getaddress() + " "
+	  			                        + contact.getCity() + " " + contact.getzip() + " " + contact.getmail() + "\n");
+	  			empBuffer.append(contactDetails);
+	    	  });
+	     }
+
+		try
+		{
+			Files.write(Paths.get("Address-Book.txt"), empBuffer.toString().getBytes());
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void printData()
+	{
+		try
+		{
+			Files.lines(new File("Address-Book.txt").toPath()).forEach(System.out::println);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public List<ContactPerson> readData()
+	{
+		List<ContactPerson> contactPerson = new ArrayList<>();
+		try
+		{
+			Files.lines(new File("Address-Book.txt").toPath())
+			     .map(line -> line.trim())
+			     .forEach(line -> System.out.println(line));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return contactPerson;
+	}
+
   public static String sity;
   public static ArrayList<String> list = new ArrayList<String>();
   public static ArrayList<String> list1 = new ArrayList<String>();
@@ -376,6 +450,10 @@ public class AddressBookMain
       if(in1==sizee1){ break; }
     }
    }
+
+   //File Handling
+   writeData();
+   printData();
  }
 }
 
