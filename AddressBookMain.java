@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import com.google.gson.*;
+import java.io.Writer;
+import java.io.FileWriter;
 
 //USE CASE 1 - Creation of Contacts
 class ContactPerson
@@ -378,6 +381,19 @@ public class AddressBookMain
 	         }
 	   }
 
+
+	//USE CASE 15 - JASON Write
+   public static void jsonWrite()
+	{
+		try {
+			Writer writer = new FileWriter("AddressBook.json");
+			new Gson().toJson(contact1, writer);
+	        writer.close();
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+	}
+
   public static String sity;
   public static ArrayList<String> list = new ArrayList<String>();
   public static ArrayList<String> list1 = new ArrayList<String>();
@@ -512,6 +528,9 @@ public class AddressBookMain
 	//CSV File
 	csvWrite();
 	csvRead();
+
+	//JASON Write
+	jasonWrite();
  }
 }
 
