@@ -1,5 +1,12 @@
-import java.util.*;
 import java.util.stream.*;
+import java.util.*;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 //USE CASE 1 - Creation of Contacts
 class ContactPerson
@@ -324,6 +331,53 @@ public class AddressBookMain
 		return contactPerson;
 	}
 
+	//USE CASE 14 -Reading And Writing to a CSV File
+   public static void csvWrite()
+	{
+		try
+		{
+			File csvFile = new File("AddressBook.csv");
+			PrintWriter print = new PrintWriter(csvFile);
+			for(Map.Entry<String, ArrayList<ContactPerson>> entry : contact1.entrySet())
+		     {
+				String addressBookName = entry.getKey();
+		        ArrayList<ContactPerson> person = entry.getValue();
+		    	  person.forEach(contact -> {
+		  			String contactDetails = addressBookName.concat(" -> " + contact.getfname() + " " +  contact.getlname()
+		  			                        + " " + contact.getphoneNo() + " " + contact.getaddress() + " "
+		  			                        + contact.getCity() + " " + contact.getzip() + " " + contact.getmail() + "\n");
+		  			print.println(contactDetails);
+		    	  });
+		     }
+			print.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public static final String delimiter = ",";
+	public static void csvRead() {
+	      try {
+	    	  String csvFile = "AddressBook.csv";
+	         File file = new File(csvFile);
+	         FileReader fr = new FileReader(file);
+	         BufferedReader br = new BufferedReader(fr);
+	         String line = "";
+	         String[] tempArr;
+	         while((line = br.readLine()) != null) {
+	            tempArr = line.split(delimiter);
+	            for(String tempStr : tempArr) {
+	               System.out.print(tempStr + " ");
+	            }
+	            System.out.println();
+	         }
+	         br.close();
+	         } catch(IOException ioe) {
+	            ioe.printStackTrace();
+	         }
+	   }
+
   public static String sity;
   public static ArrayList<String> list = new ArrayList<String>();
   public static ArrayList<String> list1 = new ArrayList<String>();
@@ -454,6 +508,10 @@ public class AddressBookMain
    //File Handling
    writeData();
    printData();
+
+	//CSV File
+	csvWrite();
+	csvRead();
  }
 }
 
